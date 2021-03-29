@@ -41,6 +41,9 @@ const router = new VueRouter({
     path: '/login',
     component: require('../views/login.vue')
   }, {
+    path: '/register',
+    component: require('../views/register.vue')
+  }, {
     path: '/search',
     component: require('../views/search.vue')
   }]

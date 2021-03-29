@@ -1,4 +1,5 @@
 const _baseUrl = 'http://localhost:3000'
+const _baseUrl2 = 'http://localhost:3030'
 
 export default {
   /**
@@ -70,5 +71,14 @@ export default {
   // 获取专辑详情
   getalbumPic (id) {
     return `${_baseUrl}/album?id=${id}`
+  },
+  // model 2
+  // 注册接口
+  register () {
+    return _baseUrl2 + '/register'
+  },
+  // 登录接口
+  login () {
+    return _baseUrl2 + '/login'
   }
 }
