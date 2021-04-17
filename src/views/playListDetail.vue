@@ -120,12 +120,18 @@ export default {
       this.$store.commit('pause')
       var audio = {}
       audio.id = song.id  // id
+      audio.singerID = song.ar[0].id // 演唱者id
       audio.singer = song.ar[0].name // 演唱者
       audio.albumPic = song.al.picUrl
       audio.name = song.name
       // 通过Vuex改变状态
       this.$store.commit('addToList', audio)
       this.$store.dispatch('getSong', audio.id)
+      console.log(this.$store.state.record.length)
+      if (this.$store.state.record) {
+        this.$store.commit('makeRecord')
+        this.$store.dispatch('recordSongs')
+      }
     },
     // 播放全部
     playAll () {

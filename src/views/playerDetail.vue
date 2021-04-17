@@ -41,9 +41,9 @@
               </div>
               <div class="control-bar ">
                 <mu-icon-button class="btn d-mode"/>
-                <mu-icon-button class="btn d-prev" @click="playPrev"/>
+                <mu-icon-button class="btn d-prev" @click="prev"/>
                 <mu-icon-button class="btn d-play btn-big" @click="togglePlay" :class="{'d-pause': playing}"/>
-                <mu-icon-button class="btn d-next" @click="playNext"/>
+                <mu-icon-button class="btn d-next" @click="next"/>
                 <mu-icon-button class="btn d-list" @click="showList"/>
               </div>
             </mu-flexbox-item>
@@ -98,6 +98,16 @@ export default {
     back () {
       this.$router.go(-1)
       this.$store.commit('toggleDetail')
+    },
+    prev () {
+      this.$store.commit('playPrev')
+      this.$store.commit('makeRecord')
+      this.$store.dispatch('recordSongs')
+    },
+    next () {
+      this.$store.commit('playNext')
+      this.$store.commit('makeRecord')
+      this.$store.dispatch('recordSongs')
     },
     changeTime (value) { // 改变播放时间事件
       var time = (value * this.durationTime) / 100

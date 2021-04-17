@@ -20,7 +20,7 @@ const router = new VueRouter({
       },
       {
         path: 'leaderBoard',
-        component: require('../views/leaderBoard')
+        component: require('../views/recommend')
       },
       {
         path: 'hotSinger',

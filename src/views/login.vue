@@ -5,9 +5,9 @@
       <div class="avatar_box">
         <img src="../../static/client.jpg" alt="">
       </div>
+      <el-button round v-if="isLogin" class="exit" @click="exit">退出登录</el-button>
       <!-- 登录表单区域 -->
-      
-        <el-form ref="loginFormRef" :model="loginForm" :rules="loginFormRules" label-width="0px" class="login_form">
+        <el-form ref="loginFormRef" :model="loginForm" :rules="loginFormRules" label-width="0px" class="login_form" v-else>
         <!-- 用户名 -->
         <el-form-item prop="loginID">
           <el-input v-model="loginForm.loginID" prefix-icon="el-icon-user" placeholder="账号"></el-input>
@@ -22,13 +22,13 @@
           <el-button type="info" @click="resetLoginForm">注册</el-button>
         </el-form-item>
       </el-form>
-    
     </div>
   </div>
 </template>
 
 <script>
 import api from '../api'
+import { mapGetters } from 'vuex'
 export default {
   data () {
     return {
@@ -38,6 +38,7 @@ export default {
         password: '',
         msg: ''
       },
+      isLogin: false,
       // 这是表单的验证规则对象
       loginFormRules: {
         // 验证用户名是否合法
@@ -51,6 +52,11 @@ export default {
           { min: 6, max: 15, message: '长度在 6 到 15 个字符', trigger: 'blur' }
         ]
       }
+    }
+  },
+  created () {
+    if (window.sessionStorage.getItem('token')) {
+      this.isLogin = true
     }
   },
   methods: {
@@ -72,10 +78,14 @@ export default {
         // 2. 通过编程式导航跳转到后台主页，路由地址是 /home
         // this.$router.push('/home')
         await this.$http.post(api.login(), this.loginForm).then((data) => {
-          console.log(data)
+          console.log(data[0])
           this.msg = data.msg
           let code = data.code
           if (code === 1) {
+            window.sessionStorage.setItem('token', data[0].userID)
+            let userName = data[0].userName
+            this.$store.commit('chageName', userName)
+            this.isLogin = true
             this.$router.push('/home')
             this.$message.success(this.msg)
           } else {
@@ -83,7 +93,17 @@ export default {
           }
         })
       })
+    },
+    exit () {
+      this.isLogin = !this.isLogin
+      window.sessionStorage.removeItem('token')
     }
+  },
+  computed: {
+    ...mapGetters([
+      'songList',
+      'userName'
+    ])
   }
 }
 </script>
@@ -138,5 +158,10 @@ export default {
 .btns {
   display: flex;
   justify-content:center;
+}
+
+.exit{
+  position: relative;
+  left: 37%;
 }
 </style>

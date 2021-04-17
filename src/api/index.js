@@ -62,6 +62,20 @@ export default {
     return _baseUrl + '?type=mv&id=' + id
   },
   /**
+   * 获取歌曲详情
+   * @param {Number} ids
+   */
+  getSongDetail (ids) {
+    return `${_baseUrl}/song/detail?ids=${ids}`
+  },
+  /**
+   * 获取歌手单曲
+   * @param {Number} ids
+   */
+  getArtists (id) {
+    return `${_baseUrl}/artists?id=${id}`
+  },
+  /**
    * 搜索
    * @param {String} words
    */
@@ -80,5 +94,13 @@ export default {
   // 登录接口
   login () {
     return _baseUrl2 + '/login'
+  },
+  // 记录接口
+  makeRecords () {
+    return _baseUrl2 + '/makerecords'
+  },
+  // 推荐
+  recommend () {
+    return _baseUrl2 + '/recommend'
   }
 }

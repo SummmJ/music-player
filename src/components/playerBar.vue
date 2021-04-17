@@ -79,6 +79,8 @@ export default {
     next () {
       this.toggleStatus()
       this.$store.commit('playNext')
+      this.$store.commit('makeRecord')
+      this.$store.dispatch('recordSongs')
     },
     // 更新进度条事件
     updateTime () {

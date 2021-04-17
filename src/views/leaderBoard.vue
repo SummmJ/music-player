@@ -1,9 +1,0 @@
-<template>
-    <div>
-        <div>尚未开发</div>
-    </div>
-</template>
-<style>
-</style>
-<script>
-</script>

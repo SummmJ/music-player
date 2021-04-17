@@ -4,12 +4,13 @@
       <mu-appbar>
           <div class="logo"  @click="handleLogin" slot="left"></div>
           <div>SummmJ</div>
+          <!-- <div>{{userName}}</div> -->
         <mu-icon-button icon='search' @click="handleSearch"  slot="right"/>
       </mu-appbar>
       <mu-tabs :value="activeTab" @change="handleTabChange" class="view-tabs">
         <mu-tab value="rage" title="主页"/>
         <mu-tab value="songList" title="歌单"/>
-        <mu-tab value="leaderBoard" title="我的"/>
+        <mu-tab value="leaderBoard" title="推荐"/>
         <mu-tab value="hotSinger" title="情感分析"/>
       </mu-tabs>
       </div>
@@ -60,7 +61,8 @@
     },
     computed: {
       ...mapGetters([
-        'songList'
+        'songList',
+        'userName'
       ])
     }
   }

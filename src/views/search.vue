@@ -52,9 +52,7 @@ export default {
         })
       }
     },
-    // handleSearch () {
-    //   this.throttle(this.loadsearch, 1000)
-    // },
+    // 节流函数
     throttle (fn, delay) {
       let flag = true
       return (...args) => {
@@ -74,11 +72,16 @@ export default {
         audio.albumPic = data.album.blurPicUrl
       })
       audio.id = song.id  // id
+      audio.singerID = song.artists[0].id
       audio.singer = song.artists[0].name // 演唱者
       audio.name = song.name
       // 通过Vuex改变状态
       this.$store.commit('addToList', audio)
       this.$store.dispatch('getSong', audio.id)
+      if (this.$store.state.record) {
+        this.$store.commit('makeRecord')
+        this.$store.dispatch('recordSongs')
+      }
     }
   }
 }

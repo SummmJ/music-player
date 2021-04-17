@@ -6,14 +6,17 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
+    userName: '未登录',
     audio: {
       'id': 0,
       'name': '歌曲名称',
+      'singerID': 0,
       'singer': '演唱者',
       'albumPic': '/static/placeholder_disk_play_program.png',
       'location': '',
       'album': ''
     },
+    record: {}, // 听歌记录
     lyric: '',
     currentIndex: 0, // 当前播放的歌曲位置
     playing: false, // 是否正在播放
@@ -27,6 +30,7 @@ const store = new Vuex.Store({
     change: false   // 判断是更改的时间还是播放的时间
   },
   getters: {
+    userName: state => state.userName,
     audio: state => state.audio,
     playing: state => state.playing,
     loading: state => state.loading,
@@ -38,6 +42,7 @@ const store = new Vuex.Store({
     songList: state => state.songList,
     change: state => state.change,
     currentTime: state => state.currentTime,
+    record: state => state.record,
     prCurrentTime: state => {
       return state.currentTime / state.durationTime * 100
     },
@@ -80,6 +85,9 @@ const store = new Vuex.Store({
         }
         state.playing = false
       }
+    },
+    chageName (state, name) {
+      state.userName = name
     },
     setChange (state, flag) {
       state.change = flag
@@ -140,11 +148,45 @@ const store = new Vuex.Store({
     },
     setLrc (state, lrc) {
       state.lyric = lrc
+    },
+    makeRecord (state) {
+      let userID = window.sessionStorage.getItem('token')
+      if (userID) {
+        let rating = (state.currentTime / state.durationTime) * 100 / 100
+        rating = rating.toFixed(2)
+        console.log(state.currentTime, state.durationTime)
+        // 用户歌曲的喜爱值 -1为不喜欢  喜欢为1，2，3依次递增
+        let loveValue = 0
+        if (rating <= 0.4 && rating > 0.1) {
+          loveValue = 1
+        } else if (rating <= 0.1) {
+          loveValue = -1
+        } else if (rating > 0.4 && rating < 0.8) {
+          loveValue = 2
+        } else if (rating >= 0.8) {
+          loveValue = 3
+        }
+        let record = {
+          userID: userID,
+          songID: state.audio.id,
+          loveValue: loveValue,
+          singerID: state.audio.singerID,
+          singer: state.audio.singer
+        }
+        state.record = record
+        // this.$http.post(api.makeRecords(), record).then(data => {
+        //   console.log(data)
+        // })
+        // console.log(record)
+      } else {
+        return 1
+      }
     }
   },
   // 异步的数据操作
   actions: {
     getSong ({commit, state}, id) {
+      // debugger
       // 使用 CancelToken 退出一个Axios事件
       var CancelToken = Axios.CancelToken
       var source = CancelToken.source()
@@ -163,6 +205,19 @@ const store = new Vuex.Store({
         console.log(error)
         window.alert('获取歌曲信息出错！')
       })
+    },
+    recordSongs (state) {
+      // debugger
+      let userID = window.sessionStorage.getItem('token')
+      console.log(state.state.record)
+      if (userID) {
+        Axios.post(api.makeRecords(), state.state.record).then((data) => {
+          console.log(data)
+        })
+      } else {
+        return 1
+      }
+      // console.log(state.durationTime, state.currentTime, rating, loveValue, state.audio.id, state.audio.singerID)
     }
   }
 })
