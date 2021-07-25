@@ -102,5 +102,13 @@ export default {
   // 推荐
   recommend () {
     return _baseUrl2 + '/recommend'
+  },
+  // 记录歌单
+  recordPlayList () {
+    return _baseUrl2 + '/recordplaylist'
+  },
+  // 听歌统计
+  analysis () {
+    return _baseUrl2 + '/analysis'
   }
 }

@@ -1,12 +1,12 @@
 <template>
     <div class="wrapper playList">
       <div class="content">
-        <div class="title">全部歌单 </div>
+        <div class="title" >全部歌单 </div>
             <mu-flexbox wrap="wrap" justify="space-around" class="box" :gutter="0">
-              <mu-flexbox-item basis="40%" class="list-item" :key="item.id" v-for="item in playList">
-                <router-link :to="{name: 'playListDetail',params: { id: item.id, name: item.name, coverImg: item.coverImgUrl, creator: item.creator, count: item.playCount, desc: item.description }}">
+              <mu-flexbox-item basis="40%" class="list-item" :key="item.id" v-for="item in playList" >
+                <router-link :to="{name: 'playListDetail',params: { id: item.id, name: item.name, coverImg: item.coverImgUrl, creator: item.creator, count: item.playCount, desc: item.description }}" >
                 <div class="list-bar">{{item.playCount | formatCount}}</div>
-                <img class="list-img img-response" :src="item.coverImgUrl + '?param=300y300'" lazy="loading">
+                <img class="list-img img-response" :src="item.coverImgUrl + '?param=300y300'" lazy="loading" @click="record(item)">
                 <div class="list-name">{{item.name}}</div>
                 </router-link>
               </mu-flexbox-item>
@@ -48,6 +48,17 @@ export default {
     },
     loadMore () {
       this.get()
+    },
+    record (item) {
+      console.log(item.id, item.tags[0])
+      let userID = window.sessionStorage.getItem('token')
+      let name = item.tags[0]
+      let msg = {userID, name}
+      if (userID && name) {
+        this.$http.post(api.recordPlayList(), msg).then((data) => {
+          console.log(data)
+        })
+      }
     }
   },
   filters: {

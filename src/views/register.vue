@@ -1,5 +1,6 @@
 <template>
   <div class="register_container">
+    <mu-icon-button icon='arrow_back' @click="back" slot="left"/>
     <div class="login_box">
         <!-- 注册表单区域 -->
         <el-form ref="loginFormRef" :model="loginForm" :rules="loginFormRules" label-width="0px" class="login_form">
@@ -57,6 +58,9 @@ export default {
     }
   },
   methods: {
+    back () {
+      this.$router.go(-1)
+    },
     // 点击重置按钮，重置登录表单
     resetLoginForm () {
       // console.log(this);

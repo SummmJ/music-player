@@ -174,10 +174,6 @@ const store = new Vuex.Store({
           singer: state.audio.singer
         }
         state.record = record
-        // this.$http.post(api.makeRecords(), record).then(data => {
-        //   console.log(data)
-        // })
-        // console.log(record)
       } else {
         return 1
       }

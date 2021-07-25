@@ -10,8 +10,8 @@
       <mu-tabs :value="activeTab" @change="handleTabChange" class="view-tabs">
         <mu-tab value="rage" title="主页"/>
         <mu-tab value="songList" title="歌单"/>
-        <mu-tab value="leaderBoard" title="推荐"/>
-        <mu-tab value="hotSinger" title="情感分析"/>
+        <mu-tab value="recommend" title="推荐"/>
+        <mu-tab value="analysis" title="听歌统计"/>
       </mu-tabs>
       </div>
       <div class="default-view" :class="{view: songList.length > 0}">
@@ -52,7 +52,6 @@
         this.$router.push({ path: '/index/' + val })
       },
       handleLogin () {
-        console.log(1)
         this.$router.push({ path: '/login' })
       },
       handleSearch () {

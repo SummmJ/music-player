@@ -14,8 +14,12 @@
   },
   "dependencies": {
     "axios": "^0.21.1",
+    "echarts": "^5.1.0",
     "fastclick": "^1.0.6",
+    "fs": "0.0.1-security",
     "muse-ui": "^2.0.2",
+    "net": "^1.0.2",
+    "tls": "0.0.1",
     "vue": "^2.2.2",
     "vue-awesome-swiper": "^2.3.0",
     "vue-easy-toast": "^1.0.1",

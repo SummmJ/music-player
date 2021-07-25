@@ -19,12 +19,12 @@ const router = new VueRouter({
         component: require('../views/songList')
       },
       {
-        path: 'leaderBoard',
+        path: 'recommend',
         component: require('../views/recommend')
       },
       {
-        path: 'hotSinger',
-        component: require('../views/hotSinger')
+        path: 'analysis',
+        component: require('../views/analysis')
       }
     ]
   }, {
